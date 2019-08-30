@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, Button, View, Image, TouchableOpacity, ScrollView, FlatList, TextInput } from 'react-native'
+import { StyleSheet, Text, Alert, Button, View, Image, TouchableOpacity, TouchableHighlight, ScrollView, FlatList, TextInput } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import RNPicker from "rn-modal-picker";
 import moment from 'moment'
@@ -28,7 +28,7 @@ const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes)
 const s =  bootstrapStyleSheet.create()
 const c =  bootstrapStyleSheet.constants
 
-class IplikSatinAl extends React.Component 
+class DokmayaIplikSevk extends React.Component 
 {
 
     constructor(props) {
@@ -142,35 +142,37 @@ class IplikSatinAl extends React.Component
     
       hideDateTimePicker = () => {
         this.setState({ isDateTimePickerVisible: false });
-      };
+      }
     
       handleDatePicked = date => {
         console.log("A date has been picked: ", date);
         this.setState({ selectedDate: date, 
                         selecttedDateText: moment(date).lang("tr").format('DD-MMM-YYYY') });
         this.hideDateTimePicker();
-      };
+      }
+
+      _onPressButton() {
+        Alert.alert(
+            'Iplik sepete eklendi.'
+         )
+      }
+
+      button() {
+        Alert.alert(
+          'Sepetteli iplikler dokumaya sevk edilecek',
+          'Emin misiniz ?',
+          [
+            {text: 'Hayır', onPress: () => console.warn('Hayıra basıldı'), style: 'cancel'},
+            {text: 'Evet', onPress: () => console.warn('Evete basıldı.')},
+          ]
+        )
+      }
       
       
     render(){
         return (
                 <View style={styles.container}>
                   <ScrollView>
-                    <View style = {styles.navBar}>
-                      
-                        <Button style={{ color: "#000",
-                            textAlign: "left",
-                            width: "85%",
-                            padding: 10,
-                            flexDirection: "row"}} title="Tarih Seç" onPress={this.showDateTimePicker}  />
-                        <DateTimePicker
-                          isVisible={this.state.isDateTimePickerVisible}
-                          onConfirm={this.handleDatePicked}
-                          onCancel={this.hideDateTimePicker}
-                        />
-                        <Text style={[s.text, s.h5, s.textPrimary, s.myXs1, s.myMd3]}>        {this.state.selecttedDateText}     </Text>
-                      
-                    </View>
                     
                     <View style = {styles.navBar}>
                       <RNPicker key = {1}
@@ -264,37 +266,33 @@ class IplikSatinAl extends React.Component
                       keyboardType={'numeric'}  
                       />  
                     </View>
-                    <View style = {styles.navBar}>
-                    <Text style={[s.text, s.h5, s.textPrimary, s.myXs1, s.myMd3]}>        Fiyatı  </Text>
-                      <TextInput  
-                           style={{height: 40, width: "20%", borderColor: 'black', borderWidth: 1, paddingVertical: 5}}
-                                placeholder=""  
-                      keyboardType={'numeric'}  
-                      />  
-                      <RNPicker key = {1}
-                                  dataSource={this.state.tlEuroDolar}
-                                  dummyDataSource={this.state.tlEuroDolar}
-                                  defaultValue={true}
-                                  pickerTitle={"Kur Seçimi"}
-                                  disablePicker={false}
-                                  changeAnimation={"slide"}
-                                  searchBarPlaceHolder={"Arama....."}
-                                  showPickerTitle={true}
-                                  searchBarContainerStyle={this.props.searchBarContainerStyle}
-                                  pickerStyle={styles.pickerStyle}
-                                  selectedLabel={this.state.tlEuroDolarSelectedText}
-                                  placeHolderLabel={this.state.tlEuroDolarPlaceHolderText}
-                                  selectLabelTextStyle={styles.selectLabelTextStyle2}
-                                  placeHolderTextStyle={styles.placeHolderTextStyle}
-                                  dropDownImageStyle={styles.dropDownImageStyle}
-                                  selectedValue={(index, name) => this.tlEuroDolarSelectedValue(name)}
-                                />
-                    </View>
-                    <View style = {styles.navBar}>
-                      <Text style={[s.text, s.h5, s.textPrimary, s.myXs1, s.myMd3]}>        Aciklama</Text>
-                      <TextInput style={{height: 40, flex:1 , borderColor: 'gray', borderWidth: 1}} />
-                    </View>
-                          
+                    <TouchableHighlight onPress={this._onPressButton} underlayColor="white" >
+                        <View style={styles.button}>
+                            <Text style={styles.buttonText}>Sepete Ekle</Text>
+                        </View>
+                    </TouchableHighlight>
+
+                    <FlatList
+                        contentContainerStyle={{ flex:1, marginBottom:10 }}
+                        data={[{key: 'Dokumadan Kontrole Ham Kumaş Girişi'}, {key: 'Ham Kumaşları Listele'},
+                                {key: 'Dokumadan Arta Kalan İpliğin Stoğa Eklenmesi'}, {key: 'Dokuma Makineleri                                        Parkuru'}, {key: 'Fason Dokuma'}]}
+                        renderItem= {({ item }) => (
+                            <TouchableOpacity >
+                            <View style = {styles.navBar}>
+                                <Image source = {require('../../images/dokuma.png')} style={styles.bodyItem}  />
+                                <Text style={{fontWeight:"bold",textAlign:'right'}}>{item.key}</Text>
+                                
+                            </View>
+                            </TouchableOpacity>
+                        )}
+                    />   
+
+                    
+                    <TouchableHighlight onPress={this.button} underlayColor="white" >
+                        <View style={styles.button}>
+                            <Text style={styles.buttonText}>Dokumaya Sevk Et</Text>
+                        </View>
+                    </TouchableHighlight>
                                 
                 </ScrollView>
               
@@ -307,6 +305,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5F5F5',
+  },
+  button: {
+    marginBottom: 30,
+    width: 260,
+    alignItems: 'center',
+    backgroundColor: '#2196F3'
+  },
+  buttonText: {
+    textAlign: 'center',
+    padding: 20,
+    color: 'white'
   },
   navBar: {
     height: 80,
@@ -439,4 +448,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default IplikSatinAl
+export default DokmayaIplikSevk

@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, Button, View, Image, TouchableOpacity, ScrollView, FlatList, TextInput } from 'react-native'
+import { StyleSheet, Text, Button, View, Image, TouchableOpacity, ScrollView, FlatList, TextInput, KeyboardAvoidingView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import RNPicker from "rn-modal-picker";
 import moment from 'moment'
@@ -28,7 +28,7 @@ const bootstrapStyleSheet = new BootstrapStyleSheet(constants, classes)
 const s =  bootstrapStyleSheet.create()
 const c =  bootstrapStyleSheet.constants
 
-class IplikSatinAl extends React.Component 
+class IplikSat extends React.Component 
 {
 
     constructor(props) {
@@ -37,6 +37,9 @@ class IplikSatinAl extends React.Component
       firmalar: [],
       firmaPlaceHolderText: "Firma Seç",
       firmaSelectedText: "",
+      musteriler: [],
+      musteriPlaceHolderText: "Müşteri Seç",
+      musteriSelectedText: "",
       iplikNo: [],
       iplikNoPlaceHolderText: "İplik Numarası Sec",
       iplikNoSelectedText: "",
@@ -72,6 +75,16 @@ class IplikSatinAl extends React.Component
             }); 
       }) 
 
+      
+      axios.get('http://demo2733612.mockable.io/musteriler')
+          .then(response =>{
+          const datas = response.data
+
+          this.setState({ musteriler : datas }, () => {
+              console.log(this.state.musteriler, 'data');
+            }); 
+      }) 
+
       axios.get('http://demo2733612.mockable.io/iplikNo')
           .then(response =>{
           const datas = response.data
@@ -89,9 +102,7 @@ class IplikSatinAl extends React.Component
               console.log(this.state.iplikCinsi, 'data');
             }); 
       }) 
-
       
-
       axios.get('http://demo2733612.mockable.io/iplikRengi')
           .then(response =>{
           const datas = response.data
@@ -116,8 +127,12 @@ class IplikSatinAl extends React.Component
     }
    */ 
 
-     firmaSelectedValue(name) {
+      firmaSelectedValue(name) {
         this.setState({ firmaSelectedText: name });
+      }
+
+      musteriSelectedValue(name) {
+        this.setState({ musteriSelectedText: name });
       }
       
       iplikNoSelectedValue(name) {
@@ -155,7 +170,7 @@ class IplikSatinAl extends React.Component
     render(){
         return (
                 <View style={styles.container}>
-                  <ScrollView>
+                  <ScrollView keyboardShouldPersistTaps='handled'>
                     <View style = {styles.navBar}>
                       
                         <Button style={{ color: "#000",
@@ -191,6 +206,27 @@ class IplikSatinAl extends React.Component
                               placeHolderTextStyle={styles.placeHolderTextStyle}
                               dropDownImageStyle={styles.dropDownImageStyle}
                               selectedValue={(index, name) => this.firmaSelectedValue(name)}
+                            />
+                    </View>
+                    <View style = {styles.navBar}>
+                      <RNPicker key = {1}
+                              dataSource={this.state.musteriler}
+                              dummyDataSource={this.state.musteriler}
+                              defaultValue={false}
+                              pickerTitle={"Musteriler"}
+                              showSearchBar={true}
+                              disablePicker={false}
+                              changeAnimation={"slide"}
+                              searchBarPlaceHolder={"Arama....."}
+                              showPickerTitle={true}
+                              searchBarContainerStyle={this.props.searchBarContainerStyle}
+                              pickerStyle={styles.pickerStyle}
+                              selectedLabel={this.state.musteriSelectedText}
+                              placeHolderLabel={this.state.musteriPlaceHolderText}
+                              selectLabelTextStyle={styles.selectLabelTextStyle}
+                              placeHolderTextStyle={styles.placeHolderTextStyle}
+                              dropDownImageStyle={styles.dropDownImageStyle}
+                              selectedValue={(index, name) => this.musteriSelectedValue(name)}
                             />
                     </View>
                     <View style = {styles.navBar}>
@@ -267,10 +303,11 @@ class IplikSatinAl extends React.Component
                     <View style = {styles.navBar}>
                     <Text style={[s.text, s.h5, s.textPrimary, s.myXs1, s.myMd3]}>        Fiyatı  </Text>
                       <TextInput  
-                           style={{height: 40, width: "20%", borderColor: 'black', borderWidth: 1, paddingVertical: 5}}
-                                placeholder=""  
-                      keyboardType={'numeric'}  
-                      />  
+                            style={{height: 40, width: "60%", borderColor: 'black', borderWidth: 1, paddingVertical: 5}}
+                                  placeholder=""  
+                        keyboardType={'numeric'}  
+                        />  
+                        
                       <RNPicker key = {1}
                                   dataSource={this.state.tlEuroDolar}
                                   dummyDataSource={this.state.tlEuroDolar}
@@ -439,4 +476,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default IplikSatinAl
+export default IplikSat

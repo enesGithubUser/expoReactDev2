@@ -5,6 +5,8 @@ import { createStackNavigator, createAppContainer} from 'react-navigation'
 import Anasayfa from './src/components/Anasayfa'
 import Iplik from './src/components/Iplik/Iplik'
 import IplikSatinAl from './src/components/Iplik/IplikSatinAl'
+import IplikSat from './src/components/Iplik/IplikSat'
+import DokumayaIplikSevk from './src/components/Iplik/DokumayaIplikSevk'
 import Dokuma from './src/components/Dokuma'
 import Apre from './src/components/Apre'
 import Stok from './src/components/Stok'
@@ -29,6 +31,26 @@ const AppNavigator = createStackNavigator({
   IplikSatinAl: {screen : IplikSatinAl,
     navigationOptions: () => ({
       headerTitle: 'İplik Satın Al',
+      headerBackTitle: 'A much too long text for back button from B to A',
+      headerTruncatedBackTitle: 'İplik',
+      headerTintColor: 'blue',
+      headerStyle: { justifyContent: 'center' }, 
+      headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center', textAlign: 'center', justifyContent: 'center' }      
+    })
+  },
+  IplikSat: {screen : IplikSat,
+    navigationOptions: () => ({
+      headerTitle: 'İplik Sat',
+      headerBackTitle: 'A much too long text for back button from B to A',
+      headerTruncatedBackTitle: 'İplik',
+      headerTintColor: 'blue',
+      headerStyle: { justifyContent: 'center' }, 
+      headerTitleStyle: { fontWeight: 'bold', alignSelf: 'center', textAlign: 'center', justifyContent: 'center' }      
+    })
+  },
+  DokumayaIplikSevk: {screen : DokumayaIplikSevk,
+    navigationOptions: () => ({
+      headerTitle: 'Dokumaya Iplik Sevk Et',
       headerBackTitle: 'A much too long text for back button from B to A',
       headerTruncatedBackTitle: 'İplik',
       headerTintColor: 'blue',

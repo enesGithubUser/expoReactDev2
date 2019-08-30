@@ -1,26 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons';
 
 class Dokuma extends React.Component {
     render(){
       return (
-         <View style={styles.body}>
+         <View>
             <View >
               <ScrollView>
-                <FlatList
-                  contentContainerStyle={{ flex:1, marginBottom:10 }}
-                  data={[{key: 'Dokumadan Kontrole Ham Kumaş Girişi'}, {key: 'Ham Kumaşları Listele'},
-                          {key: 'Dokumadan Arta Kalan İpliğin Stoğa Eklenmesi'}, {key: 'Dokuma Makineleri                                        Parkuru'}, {key: 'Fason Dokuma'}]}
-                  renderItem= {({ item }) => (
-                    <TouchableOpacity >
-                      <View style = {styles.navBar}>
-                        <Image source = {require('../images/dokuma.png')} style={styles.bodyItem}  />
-                        <Text style={{fontWeight:"bold",textAlign:'right'}}>{item.key}</Text>
-                        
-                      </View>
-                    </TouchableOpacity>
-                  )}
+              <Button
+                  icon={
+                    <Icon
+                      name="arrow-right"
+                      size={15}
+                      color="white"
+                    />
+                  }
+                  iconRight
+                  title="Dokumadan Kontrole Ham Kumaş Girişi"
                 />
               </ScrollView>
             </View>                  

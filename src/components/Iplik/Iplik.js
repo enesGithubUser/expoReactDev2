@@ -16,19 +16,19 @@ class Iplik extends React.Component {
                   </View>
                 </TouchableOpacity>
                 
-                <TouchableOpacity >
-                  <View style = {styles.navBar}>
-                    <Image source = {require('../../images/iplik.png')} style={styles.bodyItem}  />
-                    <Text style={{fontWeight:"bold",textAlign:'right', flexWrap: 'wrap'}}>
-                    Dokumaya İplik Sevk Et</Text>
-                  </View>
-                </TouchableOpacity>
-                
-                <TouchableOpacity >
+                <TouchableOpacity onPress={ ()=> { this.props.navigation.push('IplikSat')}}>
                   <View style = {styles.navBar}>
                     <Image source = {require('../../images/iplik.png')} style={styles.bodyItem}  />
                     <Text style={{fontWeight:"bold",textAlign:'right', flexWrap: 'wrap'}}>
                     İplik Sat</Text>
+                  </View>
+                </TouchableOpacity>
+                
+                <TouchableOpacity onPress={ ()=> { this.props.navigation.push('DokumayaIplikSevk')}}>
+                  <View style = {styles.navBar}>
+                    <Image source = {require('../../images/iplik.png')} style={styles.bodyItem}  />
+                    <Text style={{fontWeight:"bold",textAlign:'right', flexWrap: 'wrap'}}>
+                    Dokumaya İplik Sevk Et</Text>
                   </View>
                 </TouchableOpacity>
                 
